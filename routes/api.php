@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
+Route::get('categories', 'CategoryController@getAllCategories'); //cogemos todas las categorias
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
@@ -23,7 +26,7 @@ Route::group([
         ));
     });
     //categorias
-    Route::get('categories', 'CategoryController@getAllCategories'); //cogemos todas las categorias
+    //Route::get('categories', 'CategoryController@getAllCategories'); //cogemos todas las categorias
     //recetas
     Route::get('recipe/{id}', 'RecipeController@getRecipeById'); //cogemos la receta por id
     Route::get('full-recipe/{id}', 'RecipeController@getFullRecipeById'); //cogemos todos los campos de la receta por id
@@ -43,5 +46,7 @@ Route::group([
     //complexities
     Route::get('complexity', 'ComplexityController@getAllComplexity'); //cogemos todas las complejidades
 });
+
+
 
 
