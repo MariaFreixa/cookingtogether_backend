@@ -35,15 +35,11 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "App\\": "app/"
         },
-        "files": [
-            "src/Illuminate/Collections/helpers.php",
-            "src/Illuminate/Events/functions.php",
-            "src/Illuminate/Foundation/helpers.php",
-            "src/Illuminate/Support/helpers.php"
+        "classmap": [
+            "database/seeds",
+            "database/factories"
         ]
     },
     "autoload-dev": {

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Models\Rating;
-use App\Models\Recipe;
+use App\Rating;
+use App\Recipe;
 
 
 class RatingController extends Controller {
