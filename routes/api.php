@@ -22,5 +22,7 @@ Route::group(['middleware' => ['jwt.verify','cors']], function() {
     /*AÑADE AQUI LAS RUTAS QUE QUIERAS PROTEGER CON JWT*/
 });
 
+Route::middleware(['cors'])->group(function () {
     Route::post('register', 'UserController@register');
     Route::post('login', 'UserController@authenticate');
+});
