@@ -8,10 +8,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use File;
 use Validator;
-use App\User;
-use App\Recipe;
-use App\Ingredient;
-use App\Step;
+use App\Models\User;
+use App\Models\Recipe;
+use App\Models\Ingredient;
+use App\Models\Step;
 
 
 class RecipeController extends Controller {

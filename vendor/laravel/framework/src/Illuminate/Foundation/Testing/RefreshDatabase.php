@@ -3,9 +3,12 @@
 namespace Illuminate\Foundation\Testing;
 
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Testing\Traits\CanConfigureMigrationCommands;
 
 trait RefreshDatabase
 {
+    use CanConfigureMigrationCommands;
+
     /**
      * Define hooks to migrate the database before and after each test.
      *
@@ -49,7 +52,9 @@ trait RefreshDatabase
      */
     protected function migrateUsing()
     {
-        return [];
+        return [
+            '--seed' => $this->shouldSeed(),
+        ];
     }
 
     /**
@@ -68,19 +73,6 @@ trait RefreshDatabase
         }
 
         $this->beginDatabaseTransaction();
-    }
-
-    /**
-     * The parameters that should be used when running "migrate:fresh".
-     *
-     * @return array
-     */
-    protected function migrateFreshUsing()
-    {
-        return [
-            '--drop-views' => $this->shouldDropViews(),
-            '--drop-types' => $this->shouldDropTypes(),
-        ];
     }
 
     /**
@@ -123,27 +115,5 @@ trait RefreshDatabase
     {
         return property_exists($this, 'connectionsToTransact')
                             ? $this->connectionsToTransact : [null];
-    }
-
-    /**
-     * Determine if views should be dropped when refreshing the database.
-     *
-     * @return bool
-     */
-    protected function shouldDropViews()
-    {
-        return property_exists($this, 'dropViews')
-                            ? $this->dropViews : false;
-    }
-
-    /**
-     * Determine if types should be dropped when refreshing the database.
-     *
-     * @return bool
-     */
-    protected function shouldDropTypes()
-    {
-        return property_exists($this, 'dropTypes')
-                            ? $this->dropTypes : false;
     }
 }

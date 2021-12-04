@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use File;
 use Validator;
-use App\User;
+use App\Models\User;
 
 
 class AuthController extends Controller {

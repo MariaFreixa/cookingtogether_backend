@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Favorite;
-use App\User;
+use App\Models\Favorite;
+use App\Models\User;
 
 
 class FavoriteController extends Controller {
