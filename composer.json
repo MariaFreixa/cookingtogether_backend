@@ -38,7 +38,13 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "src/Illuminate/Collections/helpers.php",
+            "src/Illuminate/Events/functions.php",
+            "src/Illuminate/Foundation/helpers.php",
+            "src/Illuminate/Support/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
