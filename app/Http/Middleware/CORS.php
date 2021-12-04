@@ -6,12 +6,14 @@ use Closure;
 class CORS {
     
     public function handle($request, Closure $next) {
-        // permite peticiones desde cualquier origen
         header('Access-Control-Allow-Origin: *');
-        // permite peticiones con métodos GET, PUT, POST, DELETE y OPTIONS
-        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
-        // permite los headers Content-Type y Authorization
-        header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+        header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+        header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+        $method = $_SERVER['REQUEST_METHOD'];
+        if($method == "OPTIONS") {
+            die();
+        }
         return $next($request);
     }
 }
