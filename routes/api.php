@@ -4,7 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('categories', 'CategoryController@getAllCategories'); //cogemos todas las categorias
+
+Route::middleware(['guest'])->group(function () {
+    Route::get('categories', 'CategoryController@getAllCategories'); //cogemos todas las categorias
+});
 
 Route::group([
     'middleware' => 'api',
