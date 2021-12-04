@@ -13,7 +13,7 @@ class CategoryController extends Controller {
      * @return void
      */
     public function __construct() {
-        $this->middleware('api', ['except' => ['getAllCategories']]);
+        $this->middleware('auth:api', ['except' => ['getAllCategories']]);
     }
     /**
      * Get all categories.

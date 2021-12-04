@@ -13,4 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'web'], function ($router) {});
+Route::group(['prefix' => 'web'
+
+], function ($router) {
+    Route::get('categories', 'CategoryController@getAllCategories');
+});
