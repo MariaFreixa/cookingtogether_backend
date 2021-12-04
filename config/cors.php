@@ -31,11 +31,4 @@ return [
 
     'supports_credentials' => false,
 
-    'supportsCredentials' => false,
-        'allowedOrigins' => ['*'], //['http://localhost:8100'],
-        'allowedOriginsPatterns' => [],
-        'allowedHeaders' => ['*'],
-        'allowedMethods' => ['*'],
-        'exposedHeaders' => [],
-        'maxAge' => 0,
 ];
