@@ -106,41 +106,39 @@ class RecipeController extends Controller {
             return response()->json($validator->errors(), 400);
         }
         try {
-            DB::transaction(function () {
-                $files = $request->file('main_image')->getRealPath();
-                $image = file_get_contents($files);
-                $base64 = base64_encode($image);
-                $recipeImage = $base64;
+            $files = $request->file('main_image')->getRealPath();
+            $image = file_get_contents($files);
+            $base64 = base64_encode($image);
+            $recipeImage = $base64;
 
-                $name = $request->input('name');
-                $diners = $request->input('diners');
-                $video = $request->input('video');
-                $category = $request->input('id_category');
-                $complexity = $request->input('id_complexity');
+            $name = $request->input('name');
+            $diners = $request->input('diners');
+            $video = $request->input('video');
+            $category = $request->input('id_category');
+            $complexity = $request->input('id_complexity');
 
-                $recipe = array('name'=>$name,"main_image"=>$recipeImage,"diners"=>$diners,"video"=>$video, 'id_category'=>$category, 'id_complexity'=>$complexity, 'id_user'=>$user->id);
-                $recipeCreate = Recipe::create($recipe);
+            $recipe = array('name'=>$name,"main_image"=>$recipeImage,"diners"=>$diners,"video"=>$video, 'id_category'=>$category, 'id_complexity'=>$complexity, 'id_user'=>$user->id);
+            $recipeCreate = Recipe::create($recipe);
 
-                $ingredientsArray = (array_values($request->ingredients));
+            $ingredientsArray = (array_values($request->ingredients));
 
-                foreach ($ingredientsArray as $key => $value) {
-                    $replace = str_replace('{"ingredient":"', "", $ingredientsArray[$key]);
-                    $replace2 = str_replace('"}', "", $replace);
-                    $ingredients = array('id_recipe'=>$recipeCreate->id, 'ingredient'=>$replace2);
+            foreach ($ingredientsArray as $key => $value) {
+                $replace = str_replace('{"ingredient":"', "", $ingredientsArray[$key]);
+                $replace2 = str_replace('"}', "", $replace);
+                $ingredients = array('id_recipe'=>$recipeCreate->id, 'ingredient'=>$replace2);
 
-                    Ingredient::create($ingredients);
-                }
+                Ingredient::create($ingredients);
+            }
 
-                $stepsArray = (array_values($request->steps));
+            $stepsArray = (array_values($request->steps));
 
-                foreach ($request->steps as $key => $value) {
-                    $replace = str_replace('{"step":"', "", $stepsArray[$key]);
-                    $replace2 = str_replace('"}', "", $replace);
-                    $step = array('id_recipe'=>$recipeCreate->id, 'step'=>$replace2);
-                    
-                    Step::create($step);
-                }
-            });
+            foreach ($request->steps as $key => $value) {
+                $replace = str_replace('{"step":"', "", $stepsArray[$key]);
+                $replace2 = str_replace('"}', "", $replace);
+                $step = array('id_recipe'=>$recipeCreate->id, 'step'=>$replace2);
+                
+                Step::create($step);
+            }
         }
         catch (\Throwable $e) {
             Ingredient::where('id_recipe', $request->id)
@@ -157,7 +155,7 @@ class RecipeController extends Controller {
             ->where('id_user', '=', $user->id)
             ->delete();
 
-            return response()->json($e, 400);
+            return response()->json($e);
         }
     }
 
