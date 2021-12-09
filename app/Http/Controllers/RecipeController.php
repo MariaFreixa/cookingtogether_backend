@@ -156,6 +156,8 @@ class RecipeController extends Controller {
             Recipe::where('id', $request->id)
             ->where('id_user', '=', $user->id)
             ->delete();
+
+            return response()->json($e, 400);
         }
     }
 
