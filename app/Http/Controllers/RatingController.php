@@ -35,12 +35,15 @@ class RatingController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function getMoreRated(Request $request) {
-        $recipes = DB::table('ratings')
-        ->join('recipes','recipes.id', '=', 'ratings.id_recipe')
-        ->distinct('recipes.id')
-        ->orderBy('ratings.id_recipe', 'DESC')
-        ->take(5)
-        ->get(array('recipes.*'));
+        $ratings = Rating::count();
+        if($ratings > 0){
+            $recipes = DB::table('ratings')
+                ->join('recipes','recipes.id', '=', 'ratings.id_recipe')
+                ->orderBy('ratings.id_recipe', 'DESC')
+                ->groupBy('recipes.id')
+                ->take(5)
+                ->get(array('recipes.*'));
+        }
 
         return $recipes;
     }
