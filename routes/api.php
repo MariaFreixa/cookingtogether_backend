@@ -3,26 +3,47 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-header('Access-Control-Allow-Origin:  *');
-header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, PATCH, DELETE');
-header('Access-Control-Allow-Headers: Accept, Content-Type, X-Auth-Token, Origin, Authorization');
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
 
-Route::group(['middleware' => ['jwt.verify','cors']], function() {
-    /*AÑADE AQUI LAS RUTAS QUE QUIERAS PROTEGER CON JWT*/
+], function ($router) {
+    //gestion de usuarios
+    Route::post('login', 'AuthController@login');
+    Route::post('register', 'AuthController@register');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::get('user-profile', 'AuthController@userProfile');
+    Route::post('update-avatar-user', 'AuthController@updateAvatarUser');
+    Route::post('update-user-profile', 'AuthController@updateProfileUser');
+    Route::get('getAvatar/{id}', function ($id) {
+        $user = App\User::find($id);
+        return response()->make($user->avatar, 200, array(
+            'Content-Type' => ('Content-type: image/jpeg')
+        ));
+    });
+    //categorias
+    Route::get('categories', 'CategoryController@getAllCategories'); //cogemos todas las categorias
+    //recetas
+    Route::get('recipe/{id}', 'RecipeController@getRecipeById'); //cogemos la receta por id
+    Route::get('full-recipe/{id}', 'RecipeController@getFullRecipeById'); //cogemos todos los campos de la receta por id
+    Route::get('latest', 'RecipeController@getLatest'); //cogemos las ultimas recetas 
+    Route::get('recipes-category/{id}', 'RecipeController@getRecipesByCategory'); //cogemos las recetas de X categoria
+    Route::get('my-recipes', 'RecipeController@getMyRecipes'); //cogemos las recetas creadas por el usuario X
+    Route::post('new-recipe', 'RecipeController@newRecipe'); //insertamos una nueva receta
+    Route::post('update-recipe', 'RecipeController@updateRecipe'); //actualizamos la receta
+    Route::get('remove-recipe/{id}', 'RecipeController@removeRecipe'); //eliminamos la receta por id y usuario
+    //favorites
+    Route::get('favorites', 'FavoriteController@getFav'); //cogemos las recetas favoritas de X usuario
+    Route::get('favorite-recipe/{id}', 'FavoriteController@setFavorite'); //insertamos receta favorita al usuario
+    Route::get('remove-favorite-recipe/{id}', 'FavoriteController@removeFavorite'); //eliminamos receta favorita al usuario
+    //ratings
+    Route::get('ratings/{id}', 'RatingController@getRating'); //cogemos las puntuaciones de las recetas
+    Route::get('more-rated', 'RatingController@getMoreRated'); //cogemos las recetas más puntuadas
+    Route::post('set-rating', 'RatingController@setRating'); //añadimos la puntuacion del usuario
+    //complexities
+    Route::get('complexity', 'ComplexityController@getAllComplexity'); //cogemos todas las complejidades
 });
 
-Route::middleware(['cors'])->group(function () {
-    Route::post('register', 'UserController@register');
-    Route::post('login', 'UserController@authenticate');
-});
+
