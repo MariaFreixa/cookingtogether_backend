@@ -23,7 +23,7 @@ class RecipeController extends Controller {
      * @return void
      */
     public function __construct() {
-    $this->middleware('auth:api', ['except' => ['getRecipeById', 'getLatest', 'getRecipesByCategory', 'getFullRecipeById']]);
+    $this->middleware('auth:api', ['except' => ['getRecipeById', 'getLatest', 'getRecipesByCategory', 'getFullRecipeById', 'searchRecipe']]);
     }
 
     /**
@@ -139,6 +139,10 @@ class RecipeController extends Controller {
                 
                 Step::create($step);
             }
+
+            return response()->json([
+                'message' => 'La receta ha sido creada'
+            ]);
         }
         catch (\Throwable $e) {
             Ingredient::where('id_recipe', $request->id)
@@ -236,5 +240,22 @@ class RecipeController extends Controller {
         Recipe::where('id', $request->id)
         ->where('id_user', '=', $user->id)
         ->delete();
+    }
+
+    public function searchRecipe(Request $request) {
+        $recipes = Recipe::select('*');
+        if($request->name != null) {
+            $recipes->where('name','like', '%'.$request->name.'%');
+        }
+        if($request->diners != null) {
+            $recipes->where('diners', $request->diners);
+        }
+        if($request->id_category != null) {
+            $recipes->where('id_category', $request->id_category);
+        }
+        if($request->id_complexity != null) {
+            $recipes->where('id_complexity', $request->id_complexity);
+        }
+        return $recipes->get();
     }
 }
