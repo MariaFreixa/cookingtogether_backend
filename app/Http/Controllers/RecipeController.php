@@ -242,20 +242,3 @@ class RecipeController extends Controller {
         ->delete();
     }
 
-    public function searchRecipe(Request $request) {
-        $recipes = Recipe::select('*');
-        if($request->name != null) {
-            $recipes->where('name','like', '%'.$request->name.'%');
-        }
-        if($request->diners != null) {
-            $recipes->where('diners', $request->diners);
-        }
-        if($request->id_category != null) {
-            $recipes->where('id_category', $request->id_category);
-        }
-        if($request->id_complexity != null) {
-            $recipes->where('id_complexity', $request->id_complexity);
-        }
-        return $recipes->get();
-    }
-}
