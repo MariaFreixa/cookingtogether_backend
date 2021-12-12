@@ -241,4 +241,4 @@ class RecipeController extends Controller {
         ->where('id_user', '=', $user->id)
         ->delete();
     }
-
+}
