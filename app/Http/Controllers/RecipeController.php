@@ -32,11 +32,7 @@ class RecipeController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function getRecipeById(Request $request) {
-        $recipe = Recipe::findOrFail($request->id);
-        $base64 = base64_encode($recipe->main_image);
-        $recipe->main_image = $base64;
-
-        return $recipe;
+        return Recipe::findOrFail($request->id);
     }
 
     /**
