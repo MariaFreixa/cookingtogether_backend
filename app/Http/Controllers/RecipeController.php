@@ -42,8 +42,6 @@ class RecipeController extends Controller {
      */
     public function getFullRecipeById(Request $request) {
         $recipe = Recipe::findOrFail($request->id);
-        $base64 = base64_encode($recipe->main_image);
-        $recipe->main_image = $base64;
 
         $ingredients = DB::table('ingredients')->where('id_recipe', '=', $request->id)->get();
         $steps = DB::table('steps')->where('id_recipe', '=', $request->id)->get();
