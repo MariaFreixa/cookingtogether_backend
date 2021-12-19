@@ -22,11 +22,6 @@ class CommentController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function getCommentsByRecipeId(Request $request) {
-        $comments =  DB::table('comments')->where('id_recipe', '=', $request->id)->get();
-
-        foreach ($comments as $key => $value) {
-           $comments[$key]->userName = DB::table('users')->where('id', '=', $comments[$key]['id_user'])->get();
-        }
-        return $comments;
+        return DB::table('comments')->where('id_recipe', '=', $request->id)->get();
     }
 }

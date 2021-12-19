@@ -17,6 +17,7 @@ class CreateCommentsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users');
+            $table->string('user_name');
             $table->unsignedBigInteger('id_recipe');
             $table->foreign('id_recipe')->references('id')->on('recipes');
             $table->string('comment');
