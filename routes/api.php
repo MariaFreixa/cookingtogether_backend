@@ -47,7 +47,7 @@ Route::group([
     //complexities
     Route::get('complexity', 'ComplexityController@getAllComplexity'); //cogemos todas las complejidades
     //comments
-    Route::get('getCommentsByRecipeId', 'CommentController@getCommentsByRecipeId'); //cogemos todos los comentarios para la receta
+    Route::get('comments-recipe/{id}', 'CommentController@getCommentsByRecipeId'); //cogemos todos los comentarios para la receta
 });
 
 

@@ -14,7 +14,7 @@ class CommentController extends Controller {
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['']]);
+        $this->middleware('auth:api', ['except' => ['getCommentsByRecipeId']]);
     }
     /**
      * Get all categories.
