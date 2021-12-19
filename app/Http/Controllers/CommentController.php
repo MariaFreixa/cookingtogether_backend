@@ -21,7 +21,7 @@ class CommentController extends Controller {
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function commentsByRecipeId(Request $request) {
+    public function getCommentsByRecipeId(Request $request) {
         $comments = Comment::findOrFail($request->id);
         foreach ($comments as $key => $value) {
             Log::debug($comments[$key]);
