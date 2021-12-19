@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Log;
 use App\Comment;
 use App\User;
 
-class CategoryController extends Controller {
+class CommentController extends Controller {
 
     /**
      * Create a new AuthController instance.
