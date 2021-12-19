@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Comment;
 use App\User;
 
@@ -22,13 +21,15 @@ class CommentController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function getCommentsByRecipeId(Request $request) {
-        $comments = Comment::findOrFail($request->id);
+        Log::debug($request->id);
+        $comments =  DB::table('comments')->where('id_recipe', '=', $request->id)->get();
+
         foreach ($comments as $key => $value) {
             Log::debug($comments[$key]);
             Log::debug($comments[$key]['id_user']);
-           $comments->userName = $comments[$key]['id_user'];
-        }
 
-        return Comment::findOrFail($request->id);
+           $comments[$key]->userName = DB::table('users')->where('id', '=', $comments[$key]['id_user'])->get();
+        }
+        return $comments;
     }
 }
