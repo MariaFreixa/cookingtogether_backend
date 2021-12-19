@@ -13,6 +13,7 @@ use App\Recipe;
 use App\Ingredient;
 use App\Favorite;
 use App\Step;
+use App\Comment;
 
 
 class RecipeController extends Controller {
@@ -251,5 +252,23 @@ class RecipeController extends Controller {
             $recipes->where('id_complexity', $request->id_complexity);
         }
         return $recipes->get();
+    }
+
+    public function setComment(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'comment' => 'string|between:2,255',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
+
+        $user = auth()->user();
+        $comment = array('id_user'=>$user->id, 'id_recipe'=>$request->id, 'comment' => $request->comment);
+        Comment::create($comment);
+
+        return response()->json([
+            'message' => 'El comentarioha sido creado'
+        ]);
     }
 }
