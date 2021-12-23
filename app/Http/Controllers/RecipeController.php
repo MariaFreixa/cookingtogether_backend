@@ -56,7 +56,7 @@ class RecipeController extends Controller {
      * @return \Illuminate\Http\JsonResponse
      */
     public function getLatest() {
-        return Recipe::latest()->take(5)->get();
+        return Recipe::latest()->take(4)->get();
     }
 
     /**

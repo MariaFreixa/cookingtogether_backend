@@ -40,7 +40,7 @@ class RatingController extends Controller {
             ->join('recipes','recipes.id', '=', 'ratings.id_recipe')
             ->orderBy('ratings.id_recipe', 'DESC')
             ->groupBy('recipes.id', 'recipes.name', 'recipes.main_image', 'recipes.id_complexity', 'recipes.id_category', 'recipes.diners', 'recipes.video', 'recipes.id_user', 'recipes.created_at', 'recipes.updated_at')
-            ->take(5)
+            ->take(4)
             ->get(array('recipes.*'));
         
     }
