@@ -264,7 +264,7 @@ class RecipeController extends Controller {
         }
 
         $user = auth()->user();
-        $comment = array('id_user'=>$user->id, 'id_recipe'=>$request->id, 'comment' => $request->comment);
+        $comment = array('id_user'=>$user->id, 'id_recipe'=>$request->id, 'comment' => $request->comment, 'user_name'=>$user->name);
         Comment::create($comment);
 
         return response()->json([
