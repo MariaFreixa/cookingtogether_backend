@@ -38,6 +38,7 @@ class RatingController extends Controller {
 
             return DB::table('ratings')
             ->join('recipes','recipes.id', '=', 'ratings.id_recipe')
+            ->where('ratings.rating', '>', 0)
             ->orderBy('ratings.id_recipe', 'DESC')
             ->groupBy('recipes.id', 'recipes.name', 'recipes.main_image', 'recipes.id_complexity', 'recipes.id_category', 'recipes.diners', 'recipes.video', 'recipes.id_user', 'recipes.created_at', 'recipes.updated_at')
             ->take(4)
