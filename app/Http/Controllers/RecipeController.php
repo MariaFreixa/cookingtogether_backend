@@ -14,6 +14,7 @@ use App\Ingredient;
 use App\Favorite;
 use App\Step;
 use App\Comment;
+use App\Rating;
 
 
 class RecipeController extends Controller {
@@ -221,6 +222,12 @@ class RecipeController extends Controller {
 
     public function removeRecipe(Request $request) {
         $user = auth()->user();
+
+        Comment::where('id_recipe', $request->id)
+        ->delete();
+
+        Rating::where('id_recipe', $request->id)
+        ->delete();
 
         Ingredient::where('id_recipe', $request->id)
         ->delete();
